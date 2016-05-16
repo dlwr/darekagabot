@@ -1,0 +1,27 @@
+default: &default
+  prepared_statements: false
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  encoding: utf8
+
+development:
+  <<: *default
+  host: localhost
+  port: 5432
+  database: darekatohanasu_development
+  username: darekatohanasu
+  password:
+
+test:
+  <<: *default
+  host: localhost
+  port: 5432
+  database: darekatohanasu_test
+  pool: 5
+  username: darekatohanasu
+  password:
+
+production:
+  <<: *default
+  pool: <%= ENV['DB_POOL'] || ENV['MAX_THREADS'] || 5 %>
