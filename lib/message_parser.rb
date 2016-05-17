@@ -5,7 +5,12 @@ module MessageParser
       message = JSON.parse(request.body.read, symbolize_names: true)
       message[:result].each do |result|
         puts result
-        if result[:content][:contentType] != 1
+        if result[:content][:opType] == 4
+          result[:content][:params].compact.each do |line_mid|
+            User.find_or_create_by(line_mid: line_mid)
+          end
+          return
+        elsif result[:content][:contentType] != 1
           return
         end
         text = result[:content][:text]
